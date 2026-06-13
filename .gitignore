@@ -45,3 +45,4 @@ next-env.d.ts
 # uploaded photos (keep folder)
 /public/uploads/*
 !/public/uploads/.gitkeep
+public/uploads/*.mov
