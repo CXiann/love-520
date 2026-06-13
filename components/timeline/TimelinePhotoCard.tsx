@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import { isLocalUpload, mediaSrc } from "@/lib/media-src";
 import type { TimelineMilestoneData } from "./types";
 
 type TimelinePhotoCardProps = {
@@ -24,7 +26,9 @@ export function TimelinePhotoCard({
   onDragStart,
   onDragEnd,
 }: TimelinePhotoCardProps) {
+  const [imgError, setImgError] = useState(false);
   const dateLabel = format(new Date(milestone.date), "MMM yyyy");
+  const imageSrc = mediaSrc(milestone.imageUrl);
   const w =
     layout === "slot" ? "w-full max-w-[160px]" : "w-[128px] sm:w-[140px] md:w-[152px]";
 
@@ -39,14 +43,16 @@ export function TimelinePhotoCard({
   const inner = (
     <>
       <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-black/30">
-        {milestone.imageUrl ? (
+        {imageSrc && !imgError ? (
           <Image
-            src={milestone.imageUrl}
+            src={imageSrc}
             alt={milestone.title}
             fill
             className="object-contain pointer-events-none"
             sizes="(max-width: 160px) 100vw"
             draggable={false}
+            unoptimized={isLocalUpload(milestone.imageUrl)}
+            onError={() => setImgError(true)}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-3xl text-accent/40">

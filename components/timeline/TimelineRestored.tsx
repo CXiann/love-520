@@ -1,9 +1,42 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import { isLocalUpload, mediaSrc } from "@/lib/media-src";
 import type { TimelineMilestoneData } from "./types";
+
+function TimelineRestoredPhoto({
+  milestone,
+}: {
+  milestone: TimelineMilestoneData;
+}) {
+  const [imgError, setImgError] = useState(false);
+  const imageSrc = mediaSrc(milestone.imageUrl);
+
+  if (!imageSrc || imgError) {
+    return (
+      <div className="mb-4 flex aspect-[3/4] items-center justify-center bg-accent/10">
+        <span className="text-4xl text-accent/50">♥</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-sm bg-black/30">
+      <Image
+        src={imageSrc}
+        alt={milestone.title}
+        fill
+        className="object-contain"
+        sizes="240px"
+        unoptimized={isLocalUpload(milestone.imageUrl)}
+        onError={() => setImgError(true)}
+      />
+    </div>
+  );
+}
 
 export function TimelineRestored({
   milestones,
@@ -37,15 +70,7 @@ export function TimelineRestored({
               style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1}deg)` }}
             >
               {m.imageUrl ? (
-                <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-sm bg-black/30">
-                  <Image
-                    src={m.imageUrl}
-                    alt={m.title}
-                    fill
-                    className="object-contain"
-                    sizes="240px"
-                  />
-                </div>
+                <TimelineRestoredPhoto milestone={m} />
               ) : (
                 <div className="mb-4 flex aspect-[3/4] items-center justify-center bg-accent/10">
                   <span className="text-4xl text-accent/50">♥</span>

@@ -8,6 +8,7 @@ import {
   type PanInfo,
 } from "framer-motion";
 import { dollEase, dollEnter } from "../dolls/doll-motion";
+import { isLocalUpload, mediaSrc } from "@/lib/media-src";
 import type { GalleryItemData } from "./useGalleryQuest";
 
 const TRASH_ANIM_MS = 700;
@@ -84,12 +85,13 @@ export function GalleryTile({
   const photoInner = (
     <div className="relative aspect-square w-full overflow-hidden rounded-[2px] bg-background/40 shadow-inner ring-1 ring-black/10">
       <Image
-        src={item.imageUrl}
+        src={mediaSrc(item.imageUrl) ?? item.imageUrl}
         alt="Photo from our camera roll"
         fill
         draggable={false}
         className="pointer-events-none object-cover transition duration-500 group-hover:scale-[1.03]"
         sizes="120px"
+        unoptimized={isLocalUpload(item.imageUrl)}
       />
     </div>
   );
