@@ -54,3 +54,4 @@ next-env.d.ts
 # large videos — host externally or compress (GitHub limit 100MB)
 /public/uploads/*.mov
 /public/uploads/*.mp4
+!/public/uploads/video-1.mp4
