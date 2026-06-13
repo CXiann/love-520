@@ -42,7 +42,15 @@ next-env.d.ts
 
 /app/generated/prisma
 
-# uploaded photos (keep folder)
+# uploaded media — ignore by default; un-ignore folders/files we deploy
 /public/uploads/*
 !/public/uploads/.gitkeep
-public/uploads/*.mov
+!/public/uploads/gallery-images/
+!/public/uploads/gallery-images/**
+!/public/uploads/favorite/
+!/public/uploads/favorite/**
+!/public/uploads/*.jpeg
+!/public/uploads/*.mp3
+# large videos — host externally or compress (GitHub limit 100MB)
+/public/uploads/*.mov
+/public/uploads/*.mp4
