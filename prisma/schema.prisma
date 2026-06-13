@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model SiteSettings {
+  id                 String    @id @default("default")
+  partnerName        String
+  yourName           String
+  relationshipStart  DateTime
+  first520Date       DateTime?
+  heroImageUrl       String?
+  chapter1ImageUrl   String?
+  chapter1VideoUrl   String?
+  chapter1VideoPosterUrl String?
+  chapter2ImageUrl   String?
+  chapter2VideoUrl     String?
+  chapter2VideoPosterUrl String?
+  chapter1Copy       String?
+  chapter2Copy       String?
+  musicUrl           String?
+  easterEggStarMessage String?
+  chapter1HotspotsJson String?
+  chapter1PauseCaption String?
+  chapter2FilmStripJson String?
+  chapter2BonusRedact  String?
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  date        DateTime
+  title       String
+  description String
+  imageUrl    String?
+  sortOrder   Int
+}
+
+model GalleryItem {
+  id        String  @id @default(cuid())
+  imageUrl  String
+  caption   String?
+  sortOrder Int
+  isDecoy   Boolean @default(false)
+}
+
+model MemoryDoll {
+  id          String    @id @default(cuid())
+  name        String
+  imageUrl    String
+  memoryTitle String
+  memoryStory String
+  memoryDate  DateTime?
+  sortOrder   Int
+}
+
+model Letter {
+  id      String @id @default("default")
+  content String
+}
+
+model SecretContent {
+  id             String  @id @default("default")
+  title          String
+  body           String
+  mediaUrl       String?
+  envelopeTeaser String?
+  quizJson       String?
+  passwordHints  String?
+}
